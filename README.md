@@ -111,13 +111,13 @@ Then rebuild and redeploy your Next.js application to make use of the changed co
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13 |
-| aws | >= 4.8 |
+| aws | >= 4.15.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 4.8 |
+| aws | >= 4.15.0 |
 
 ## Inputs
 
