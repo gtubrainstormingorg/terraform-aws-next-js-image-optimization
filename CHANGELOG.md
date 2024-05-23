@@ -3,8 +3,8 @@
 ## [Unreleased]
 
 ## [12.1.4] - 2024-05-23
-
-- Uses Image Optimizer module of [Next.js 12.1.4](https://github.com/vercel/next.js/releases/tag/v12.1.4) and Node 16
+- Uses Image Optimizer module of [Next.js 12.1.4](https://github.com/vercel/next.js/releases/tag/v12.1.4)
+- Use Node 14
 
 ## [12.1.3] - 2022-08-12
 
