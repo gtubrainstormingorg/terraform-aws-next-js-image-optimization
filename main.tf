@@ -6,7 +6,7 @@ module "lambda_content" {
   source  = "milliHQ/download/npm"
   version = "2.1.0"
 
-  module_name    = "@millihq/tf-next-image-optimization"
+  module_name    = "howdygo-tf-next-image-optimization"
   module_version = var.next_image_version
   path_to_file   = "dist.zip"
   use_local      = var.debug_use_local_packages
@@ -20,7 +20,7 @@ module "image_optimizer" {
   function_name = var.deployment_name
   description   = "Managed by Terraform Next.js image optimizer"
   handler       = "handler.handler"
-  runtime       = "nodejs14.x"
+  runtime       = "nodejs16.x"
   memory_size   = var.lambda_memory_size
   timeout       = var.lambda_timeout
   publish       = true

@@ -9,15 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: public.ecr.aws/sam/build-nodejs14.x:latest
+    container: public.ecr.aws/sam/build-nodejs16.x:latest
     steps:
       - name: Install yarn
-        run: npm install --global yarn@1.22.17
+        run: npm install --global yarn@1.22.18
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             .yarn
@@ -26,11 +26,11 @@ jobs:
 
       - name: Build
         run: |
-          yarn --frozen-lockfile --cache-folder .yarn
-          yarn workspace @millihq/tf-next-image-optimization build
+          yarn
+          yarn workspace howdygo-tf-next-image-optimization build
 
       - name: Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: lambda
           path: |
@@ -40,7 +40,7 @@ jobs:
 
   test-integration:
     runs-on: ubuntu-latest
-    container: public.ecr.aws/sam/build-nodejs14.x:latest
+    container: public.ecr.aws/sam/build-nodejs16.x:latest
 
     services:
       s3:
@@ -51,12 +51,12 @@ jobs:
 
     steps:
       - name: Install yarn
-        run: npm install --global yarn@1.22.17
+        run: npm install --global yarn@1.22.18
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             .yarn
@@ -65,7 +65,7 @@ jobs:
 
       - name: Jest
         run: |
-          yarn --frozen-lockfile --cache-folder .yarn
+          yarn
           yarn test
 
   test-e2e:
@@ -86,25 +86,27 @@ jobs:
         ports:
           - 9000:9000
 
+          # sudo apt-get update
+          # sudo apt-get install -y unzip
+          # curl -L https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip -o aws-sam-cli-linux-x86_64.zip
+          # unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+          # sudo ./sam-installation/install
     steps:
       - name: Setup AWS SAM
         run: |
-          brew tap aws/tap
-          brew install aws-sam-cli
+
           sam --version
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Cache
-        uses: actions/cache@v2
+      - name: Setup node
+        uses: actions/setup-node@v3
         with:
-          path: |
-            .yarn
-            **/node_modules
-          key: e2e-${{ hashFiles('yarn.lock') }}
+          node-version: '16'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --check-files
+        run: yarn install --check-files
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -131,16 +133,16 @@ jobs:
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: yarn
 
       - name: Download build artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: lambda
           path: lib

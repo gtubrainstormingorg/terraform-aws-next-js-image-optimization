@@ -8,7 +8,7 @@
 
 const http = require('http');
 
-const { imageOptimizer } = require('@millihq/tf-next-image-optimization');
+const { imageOptimizer } = require('howdygo-tf-next-image-optimization');
 const S3 = require('aws-sdk/clients/s3');
 
 async function invoke({

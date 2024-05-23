@@ -9,3 +9,6 @@ node_modules
 
 # IntelliJ IDEA
 /.idea/
+
+# Yarn
+.yarn
