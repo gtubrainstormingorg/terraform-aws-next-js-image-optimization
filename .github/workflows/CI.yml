@@ -14,7 +14,7 @@ jobs:
       - name: Install yarn
         run: npm install --global yarn@1.22.18
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache
         uses: actions/cache@v3
@@ -53,7 +53,7 @@ jobs:
       - name: Install yarn
         run: npm install --global yarn@1.22.18
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache
         uses: actions/cache@v3
@@ -96,7 +96,7 @@ jobs:
           sudo ./sam-installation/install
           sam --version
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup node
         uses: actions/setup-node@v3
