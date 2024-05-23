@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: public.ecr.aws/sam/build-nodejs16.x:latest
+    container: public.ecr.aws/sam/build-nodejs20.x:latest
     steps:
       - name: Install yarn
         run: npm install --global yarn@1.22.18
@@ -40,7 +40,7 @@ jobs:
 
   test-integration:
     runs-on: ubuntu-latest
-    container: public.ecr.aws/sam/build-nodejs16.x:latest
+    container: public.ecr.aws/sam/build-nodejs20.x:latest
 
     services:
       s3:
@@ -85,16 +85,9 @@ jobs:
           MINIO_SECRET_KEY: testtest
         ports:
           - 9000:9000
-
-          # sudo apt-get update
-          # sudo apt-get install -y unzip
-          # curl -L https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip -o aws-sam-cli-linux-x86_64.zip
-          # unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
-          # sudo ./sam-installation/install
     steps:
       - name: Setup AWS SAM
         run: |
-
           sam --version
 
       - uses: actions/checkout@v3
@@ -102,7 +95,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '20'
           cache: 'yarn'
 
       - name: Install dependencies
@@ -135,7 +128,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '20'
           cache: 'yarn'
 
       - name: Install dependencies
