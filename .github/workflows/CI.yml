@@ -26,7 +26,7 @@ jobs:
 
       - name: Build
         run: |
-          yarn --frozen-lockfile --cache-folder .yarn
+          yarn --frozen-lockfile
           yarn workspace @millihq/tf-next-image-optimization build
 
       - name: Artifact
@@ -65,7 +65,7 @@ jobs:
 
       - name: Jest
         run: |
-          yarn --frozen-lockfile --cache-folder .yarn
+          yarn --frozen-lockfile
           yarn test
 
   test-e2e:
