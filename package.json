@@ -47,7 +47,7 @@
     "typescript": "^4.6.4"
   },
   "resolutions": {
-    "aws-sdk": "2.1055.0"
+    "aws-sdk": "2.1626.0"
   },
   "release-it": {
     "git": {
