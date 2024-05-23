@@ -21,7 +21,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile --cache-folder .yarn
+        run: yarn --frozen-lockfile
 
       - name: Lint Prettier
         run: yarn lint:prettier
