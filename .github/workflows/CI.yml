@@ -89,8 +89,11 @@ jobs:
     steps:
       - name: Setup AWS SAM
         run: |
-          brew tap aws/tap
-          brew install aws-sam-cli
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          curl -L https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip -o aws-sam-cli-linux-x86_64.zip
+          unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+          sudo ./sam-installation/install
           sam --version
 
       - uses: actions/checkout@v3
