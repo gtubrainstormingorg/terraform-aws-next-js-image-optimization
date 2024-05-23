@@ -11,5 +11,5 @@ WORKDIR /app
 
 COPY . .
 
-RUN yarn &&\
+RUN yarn --frozen-lockfile &&\
     yarn build

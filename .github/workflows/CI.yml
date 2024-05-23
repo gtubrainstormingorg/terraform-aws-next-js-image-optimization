@@ -65,7 +65,7 @@ jobs:
 
       - name: Jest
         run: |
-          yarn
+          yarn --frozen-lockfile
           yarn test
 
   test-e2e:
@@ -106,7 +106,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --check-files
+        run: yarn install --check-files --frozen-lockfile
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -139,7 +139,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn
+        run: yarn --frozen-lockfile
 
       - name: Download build artifact
         uses: actions/download-artifact@v3
