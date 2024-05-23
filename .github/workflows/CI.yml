@@ -106,7 +106,7 @@ jobs:
           cache: 'yarn'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --check-files
+        run: yarn install --check-files
 
       - name: Download artifact
         uses: actions/download-artifact@v2
