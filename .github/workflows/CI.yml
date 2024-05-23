@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: |
           yarn
-          yarn workspace @millihq/tf-next-image-optimization build
+          yarn workspace howdygo-tf-next-image-optimization build
 
       - name: Artifact
         uses: actions/upload-artifact@v3
