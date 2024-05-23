@@ -1057,26 +1057,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@millihq/tf-next-image-optimization@workspace:lib":
-  version: 0.0.0-use.local
-  resolution: "@millihq/tf-next-image-optimization@workspace:lib"
-  dependencies:
-    "@millihq/pixel-core": 4.2.0
-    "@types/aws-lambda": 8.10.56
-    "@types/node-fetch": ^2.5.7
-    "@types/react": ^17.0.3
-    "@types/react-dom": ^17.0.3
-    aws-sdk: 2.1626.0
-    glob: ^7.1.6
-    next: 12.1.4
-    node-fetch: 2.6.7
-    react: 17.0.2
-    react-dom: 17.0.2
-    sharp: 0.30.7
-    typescript: ^4.6.4
-  languageName: unknown
-  linkType: soft
-
 "@next/env@npm:12.1.4":
   version: 12.1.4
   resolution: "@next/env@npm:12.1.4"
@@ -4626,6 +4606,26 @@ __metadata:
   checksum: c955394bdab888a1e9bb10eb33029e0f7ce5a2ac7b3f158099dc8c486c99e73809dca609f5694b223920ca2174db33d32b12f9a2a47141dc59607c29da5a62dd
   languageName: node
   linkType: hard
+
+"howdygo-tf-next-image-optimization@workspace:lib":
+  version: 0.0.0-use.local
+  resolution: "howdygo-tf-next-image-optimization@workspace:lib"
+  dependencies:
+    "@millihq/pixel-core": 4.2.0
+    "@types/aws-lambda": 8.10.56
+    "@types/node-fetch": ^2.5.7
+    "@types/react": ^17.0.3
+    "@types/react-dom": ^17.0.3
+    aws-sdk: 2.1626.0
+    glob: ^7.1.6
+    next: 12.1.4
+    node-fetch: 2.6.7
+    react: 17.0.2
+    react-dom: 17.0.2
+    sharp: 0.30.7
+    typescript: ^4.6.4
+  languageName: unknown
+  linkType: soft
 
 "html-encoding-sniffer@npm:^2.0.1":
   version: 2.0.1
