@@ -20,7 +20,7 @@ module "image_optimizer" {
   function_name = var.deployment_name
   description   = "Managed by Terraform Next.js image optimizer"
   handler       = "handler.handler"
-  runtime       = "nodejs16.x"
+  runtime       = "nodejs20.x"
   memory_size   = var.lambda_memory_size
   timeout       = var.lambda_timeout
   publish       = true
