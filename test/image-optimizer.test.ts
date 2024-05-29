@@ -42,7 +42,7 @@ describe('unit', () => {
     forcePathStyle: true,
     signatureVersion: 'v4',
     tls: false,
-    region: "us-east-1",
+    region: "localhost",
   };
 
   beforeAll(async () => {
