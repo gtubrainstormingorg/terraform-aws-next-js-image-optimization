@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { URLSearchParams } from 'url';
 
-import { generateAPISAM, APISAMGenerator } from '@millihq/sammy';
+import { generateAPISAM, APISAMGenerator } from 'howdygo-sammy';
 import S3 from 'aws-sdk/clients/s3';
 import { extension as extensionMimeType } from 'mime-types';
 
