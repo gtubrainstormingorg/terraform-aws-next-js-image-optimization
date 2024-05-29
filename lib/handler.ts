@@ -17,7 +17,7 @@ import type {
   // itself
   // eslint-disable-next-line import/no-unresolved
 } from 'aws-lambda';
-import S3 from 'aws-sdk/clients/s3';
+import { S3Client } from '@aws-sdk/client-s3';
 
 import { imageOptimizer, S3Config } from './image-optimizer';
 import { normalizeHeaders } from './normalized-headers';
@@ -32,7 +32,7 @@ type ImageConfig = Partial<NextConfigComplete['images']>;
  * ---------------------------------------------------------------------------*/
 
 function generateS3Config(bucketName?: string): S3Config | undefined {
-  let s3: S3;
+  let s3Client: S3Client;
 
   if (!bucketName) {
     return undefined;
@@ -40,13 +40,13 @@ function generateS3Config(bucketName?: string): S3Config | undefined {
 
   // Only for testing purposes when connecting against a local S3 backend
   if (process.env.__DEBUG__USE_LOCAL_BUCKET) {
-    s3 = new S3(JSON.parse(process.env.__DEBUG__USE_LOCAL_BUCKET));
+    s3Client = new S3Client(JSON.parse(process.env.__DEBUG__USE_LOCAL_BUCKET));
   } else {
-    s3 = new S3();
+    s3Client = new S3Client({});
   }
 
   return {
-    s3,
+    s3Client,
     bucket: bucketName,
   };
 }

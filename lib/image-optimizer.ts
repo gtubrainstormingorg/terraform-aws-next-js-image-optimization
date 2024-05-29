@@ -4,7 +4,8 @@ import { URL, UrlWithParsedQuery } from 'url';
 import { Pixel } from '@millihq/pixel-core';
 import { ImageConfig } from 'next/dist/shared/lib/image-config';
 import nodeFetch from 'node-fetch';
-import S3 from 'aws-sdk/clients/s3';
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
+import { Readable } from 'stream';
 
 /* -----------------------------------------------------------------------------
  * Types
@@ -15,7 +16,7 @@ type RequestMock = {
 };
 
 type S3Config = {
-  s3: S3;
+  s3Client: S3Client;
   bucket: string;
 };
 
@@ -60,12 +61,12 @@ async function imageOptimizer(
           ? url.href.substring(1)
           : url.href;
 
-        const object = await s3Config.s3
-          .getObject({
-            Key: trimmedKey,
-            Bucket: s3Config.bucket,
-          })
-          .promise();
+        const command = new GetObjectCommand({
+          Key: trimmedKey,
+          Bucket: s3Config.bucket,
+        });
+
+        const object = await s3Config.s3Client.send(command);
 
         if (!object.Body) {
           throw new Error(`Could not fetch image ${trimmedKey} from bucket.`);
@@ -79,11 +80,10 @@ async function imageOptimizer(
 
         if (object.CacheControl) {
           res.setHeader('Cache-Control', object.CacheControl);
-          // originCacheControl = object.CacheControl;
         }
 
-        res.write(object.Body);
-        res.end();
+        const stream = object.Body as Readable;
+        stream.pipe(res);
       } else if (baseOriginUrl || headers.referer) {
         let originBaseUrl = '';
 
