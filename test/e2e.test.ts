@@ -2,7 +2,7 @@ import * as path from 'path';
 import { URLSearchParams } from 'url';
 
 import { generateAPISAM, APISAMGenerator } from 'howdygo-sammy';
-import S3 from 'aws-sdk/clients/s3';
+import { S3Client } from '@aws-sdk/client-s3';
 import { extension as extensionMimeType } from 'mime-types';
 
 import { s3PublicDir } from './utils/s3-public-dir';
@@ -28,21 +28,23 @@ describe('[e2e]', () => {
   const fixturesDir = path.resolve(__dirname, './fixtures');
   const cacheControlHeader = 'public, max-age=123456';
   let fixtureBucketName: string;
-  let s3: S3;
+  let s3Client: S3Client;
 
   beforeAll(async () => {
     // Upload the fixtures to public S3 server
-    const S3options: S3.Types.ClientConfiguration = {
-      accessKeyId: 'test',
-      secretAccessKey: 'testtest',
+    const S3options = {
+      credentials: {
+        accessKeyId: 'test',
+        secretAccessKey: 'testtest',
+      },
       endpoint: s3Endpoint,
-      s3ForcePathStyle: true,
+      forcePathStyle: true,
       signatureVersion: 'v4',
-      sslEnabled: false,
+      tls: false,
     };
-    s3 = new S3(S3options);
+    s3Client = new S3Client(S3options);
 
-    const upload = await s3PublicDir(s3, fixturesDir, cacheControlHeader);
+    const upload = await s3PublicDir(s3Client, fixturesDir, cacheControlHeader);
     fixtureBucketName = upload.bucketName;
   });
 
@@ -341,9 +343,9 @@ describe('[e2e]', () => {
                 accessKeyId: 'test',
                 secretAccessKey: 'testtest',
                 endpoint: s3Endpoint,
-                s3ForcePathStyle: true,
+                forcePathStyle: true,
                 signatureVersion: 'v4',
-                sslEnabled: false,
+                tls: false,
               }),
             },
           },
@@ -412,9 +414,9 @@ describe('[e2e]', () => {
                 accessKeyId: 'test',
                 secretAccessKey: 'testtest',
                 endpoint: s3Endpoint,
-                s3ForcePathStyle: true,
+                forcePathStyle: true,
                 signatureVersion: 'v4',
-                sslEnabled: false,
+                tls: false,
               }),
             },
           },

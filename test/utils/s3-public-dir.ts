@@ -2,18 +2,17 @@ import { randomBytes } from 'crypto';
 import { promises as fs, createReadStream } from 'fs';
 import * as path from 'path';
 
-import S3 from 'aws-sdk/clients/s3';
+import { S3Client, CreateBucketCommand, PutBucketPolicyCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { lookup as lookupMimeType } from 'mime-types';
 
 // Upload the content of the dirPath to the bucket
-// https://stackoverflow.com/a/46213474/831465
 async function uploadDir(
-  s3: S3,
+  s3Client: S3Client,
   s3Path: string,
   bucketName: string,
   cacheControl?: string
 ) {
-  async function getFiles(dir: string): Promise<string | string[]> {
+  async function getFiles(dir: string): Promise<string[]> {
     const dirents = await fs.readdir(dir, { withFileTypes: true });
     const files = await Promise.all(
       dirents.map((dirent) => {
@@ -32,16 +31,13 @@ async function uploadDir(
         // Restore the relative structure
         const objectKey = path.relative(s3Path, filePath);
         const contentType = lookupMimeType(filePath);
-        return s3
-          .putObject({
-            Key: objectKey,
-            Bucket: bucketName,
-            Body: createReadStream(filePath),
-            CacheControl: cacheControl,
-            ContentType:
-              typeof contentType === 'string' ? contentType : undefined,
-          })
-          .promise();
+        return s3Client.send(new PutObjectCommand({
+          Key: objectKey,
+          Bucket: bucketName,
+          Body: createReadStream(filePath),
+          CacheControl: cacheControl,
+          ContentType: typeof contentType === 'string' ? contentType : undefined,
+        }));
       })
   );
 
@@ -53,7 +49,7 @@ async function uploadDir(
  * Returns the bucket name
  */
 export async function s3PublicDir(
-  s3: S3,
+  s3Client: S3Client,
   dirPath: string,
   cacheControl?: string
 ): Promise<{ bucketName: string; files: string[] }> {
@@ -98,15 +94,13 @@ export async function s3PublicDir(
     }`,
   };
 
-  await s3
-    .createBucket({
-      Bucket: bucketName,
-      ACL: 'public-read',
-    })
-    .promise();
-  await s3.putBucketPolicy(bucketPolicy).promise();
+  await s3Client.send(new CreateBucketCommand({
+    Bucket: bucketName,
+    ACL: 'public-read',
+  }));
+  await s3Client.send(new PutBucketPolicyCommand(bucketPolicy));
 
-  const files = await uploadDir(s3, dirPath, bucketName, cacheControl);
+  const files = await uploadDir(s3Client, dirPath, bucketName, cacheControl);
 
   return { bucketName, files };
 }

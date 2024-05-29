@@ -2,7 +2,7 @@
 
 import * as path from 'path';
 
-import S3 from 'aws-sdk/clients/s3';
+import { S3Client } from '@aws-sdk/client-s3';
 import { extension as extensionMimeType } from 'mime-types';
 import {
   ImageConfig,
@@ -30,23 +30,25 @@ describe('unit', () => {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   };
-  let s3: S3;
+  let s3Client: S3Client;
   let bucketName: string;
   const cacheControlHeader = 'public, max-age=123456';
-  const S3options: S3.Types.ClientConfiguration = {
-    accessKeyId: 'test',
-    secretAccessKey: 'testtest',
+  const S3options = {
+    credentials: {
+      accessKeyId: 'test',
+      secretAccessKey: 'testtest',
+    },
     endpoint: s3Endpoint,
-    s3ForcePathStyle: true,
+    forcePathStyle: true,
     signatureVersion: 'v4',
-    sslEnabled: false,
+    tls: false,
   };
 
   beforeAll(async () => {
     // Upload files to local s3 Server
-    s3 = new S3(S3options);
+    s3Client = new S3Client(S3options);
 
-    const upload = await s3PublicDir(s3, fixturesDir, cacheControlHeader);
+    const upload = await s3PublicDir(s3Client, fixturesDir, cacheControlHeader);
     bucketName = upload.bucketName;
   });
 

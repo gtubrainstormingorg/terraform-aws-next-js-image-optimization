@@ -5,7 +5,7 @@ import { Pixel } from '@millihq/pixel-core';
 import getPort from 'get-port';
 import { ImageConfig } from 'next/dist/shared/lib/image-config';
 import fetch from 'node-fetch';
-import S3 from 'aws-sdk/clients/s3';
+import { S3Client } from '@aws-sdk/client-s3';
 
 import { imageOptimizer } from '../../lib/image-optimizer';
 import { createDeferred } from '../../lib/utils';
@@ -14,7 +14,16 @@ import { GenerateParams } from './generate-params';
 type ImageOptimizerResult = ReturnType<Pixel['imageOptimizer']>;
 
 interface S3Options {
-  options: S3.Types.ClientConfiguration;
+  options: {
+    credentials: {
+      accessKeyId: string;
+      secretAccessKey: string;
+    };
+    endpoint: string;
+    forcePathStyle: boolean;
+    signatureVersion: string;
+    tls: boolean;
+  };
   bucket: string;
 }
 
@@ -103,7 +112,7 @@ export async function runOptimizer(
     parsedUrl: params.parsedUrl,
     s3Config: s3Config
       ? {
-          s3: new S3(s3Config.options),
+          s3Client: new S3Client(s3Config.options),
           bucket: s3Config.bucket,
         }
       : undefined,
