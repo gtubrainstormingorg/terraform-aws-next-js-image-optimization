@@ -19,7 +19,7 @@
     "release:ci": "release-it --no-increment --no-git.push --ci"
   },
   "devDependencies": {
-    "@millihq/sammy": "^3.0.0",
+    "howdygo-sammy": "^4.0.0",
     "@ofhouse/keep-a-changelog": "2.3.0-no-increment-fix",
     "@release-it/bumper": "^3.0.1",
     "@tsconfig/node16": "^16.0.0",
@@ -70,5 +70,6 @@
         "addUnreleased": true
       }
     }
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }

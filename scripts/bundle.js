@@ -20,7 +20,7 @@ async function main() {
     processCwd: process.cwd(),
     ignore: [
       // aws-sdk is already provided in Lambda images
-      '**/aws-sdk/**/*',
+      // '**/aws-sdk/**/*',
       // next server files not required for minimal mode
       // https://github.com/vercel/next.js/blob/canary/scripts/trace-next-server.js#L76
       'node_modules/next/dist/pages/**/*',
