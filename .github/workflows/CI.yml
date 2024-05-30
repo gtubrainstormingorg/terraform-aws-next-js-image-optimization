@@ -48,7 +48,7 @@ jobs:
         env:
           MINIO_ACCESS_KEY: test
           MINIO_SECRET_KEY: testtest
-
+          MINIO_REGION: localhost
     steps:
       - name: Install yarn
         run: npm install --global yarn@1.22.18
@@ -76,6 +76,7 @@ jobs:
       # Don't worry these are fake AWS credentials for AWS SAM
       AWS_ACCESS_KEY_ID: ABIAZLJNBT8I3KFOU4NO
       AWS_SECRET_ACCESS_KEY: 4Xt3Rbx4DO21MhK1IHXZXRvVRDuqaQ0Wo5lILA/h
+      AWS_REGION: localhost
 
     services:
       s3:
@@ -83,6 +84,7 @@ jobs:
         env:
           MINIO_ACCESS_KEY: test
           MINIO_SECRET_KEY: testtest
+          MINIO_REGION: localhost
         ports:
           - 9000:9000
 
@@ -94,7 +96,6 @@ jobs:
     steps:
       - name: Setup AWS SAM
         run: |
-
           sam --version
 
       - uses: actions/checkout@v3
