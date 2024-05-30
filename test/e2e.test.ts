@@ -2,7 +2,7 @@ import * as path from 'path';
 import { URLSearchParams } from 'url';
 
 import { generateAPISAM, APISAMGenerator } from '@millihq/sammy';
-import S3 from 'aws-sdk/clients/s3';
+import { S3, S3ClientConfig } from '@aws-sdk/client-s3';
 import { extension as extensionMimeType } from 'mime-types';
 
 import { s3PublicDir } from './utils/s3-public-dir';
@@ -32,13 +32,15 @@ describe('[e2e]', () => {
 
   beforeAll(async () => {
     // Upload the fixtures to public S3 server
-    const S3options: S3.Types.ClientConfiguration = {
-      accessKeyId: 'test',
-      secretAccessKey: 'testtest',
+    const S3options: S3ClientConfig = {
+      credentials: {
+        accessKeyId: 'test',
+        secretAccessKey: 'testtest',
+      },
       endpoint: s3Endpoint,
-      s3ForcePathStyle: true,
-      signatureVersion: 'v4',
-      sslEnabled: false,
+      forcePathStyle: true,
+      // signatureVersion: 'v4',
+      tls: false,
     };
     s3 = new S3(S3options);
 

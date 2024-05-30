@@ -2,7 +2,7 @@
 
 import * as path from 'path';
 
-import S3 from 'aws-sdk/clients/s3';
+import { S3, S3ClientConfig } from '@aws-sdk/client-s3';
 import { extension as extensionMimeType } from 'mime-types';
 import {
   ImageConfig,
@@ -33,13 +33,16 @@ describe('unit', () => {
   let s3: S3;
   let bucketName: string;
   const cacheControlHeader = 'public, max-age=123456';
-  const S3options: S3.Types.ClientConfiguration = {
-    accessKeyId: 'test',
-    secretAccessKey: 'testtest',
+  const S3options: S3ClientConfig = {
+    credentials: {
+      accessKeyId: 'test',
+      secretAccessKey: 'testtest',
+    },
     endpoint: s3Endpoint,
-    s3ForcePathStyle: true,
-    signatureVersion: 'v4',
-    sslEnabled: false,
+    forcePathStyle: true,
+    // signatureVersion: 'v4',
+    // sslEnabled: false,
+    tls: false,
   };
 
   beforeAll(async () => {

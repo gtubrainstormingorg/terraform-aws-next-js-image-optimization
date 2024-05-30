@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto';
 import { promises as fs, createReadStream } from 'fs';
 import * as path from 'path';
 
-import S3 from 'aws-sdk/clients/s3';
+import { S3 } from '@aws-sdk/client-s3';
 import { lookup as lookupMimeType } from 'mime-types';
 
 // Upload the content of the dirPath to the bucket
@@ -40,8 +40,7 @@ async function uploadDir(
             CacheControl: cacheControl,
             ContentType:
               typeof contentType === 'string' ? contentType : undefined,
-          })
-          .promise();
+          });
       })
   );
 
@@ -102,9 +101,8 @@ export async function s3PublicDir(
     .createBucket({
       Bucket: bucketName,
       ACL: 'public-read',
-    })
-    .promise();
-  await s3.putBucketPolicy(bucketPolicy).promise();
+    });
+  await s3.putBucketPolicy(bucketPolicy);
 
   const files = await uploadDir(s3, dirPath, bucketName, cacheControl);
 
