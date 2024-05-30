@@ -2,7 +2,7 @@ import * as path from 'path';
 import { URLSearchParams } from 'url';
 
 import { generateAPISAM, APISAMGenerator } from 'howdygo-sammy';
-import { S3Client } from '@aws-sdk/client-s3';
+import { S3Client, S3ClientConfig } from '@aws-sdk/client-s3';
 import { extension as extensionMimeType } from 'mime-types';
 
 import { s3PublicDir } from './utils/s3-public-dir';
@@ -32,15 +32,15 @@ describe('[e2e]', () => {
 
   beforeAll(async () => {
     // Upload the fixtures to public S3 server
-    const S3options = {
+    const S3options: S3ClientConfig = {
       credentials: {
         accessKeyId: 'test',
         secretAccessKey: 'testtest',
       },
       endpoint: s3Endpoint,
       forcePathStyle: true,
-      signatureVersion: 'v4',
       tls: false,
+      region: 'localhost',
     };
     s3Client = new S3Client(S3options);
 
