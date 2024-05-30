@@ -2,7 +2,7 @@ import * as path from 'path';
 import { URLSearchParams } from 'url';
 
 import { generateAPISAM, APISAMGenerator } from 'howdygo-sammy';
-import * as S3 from 'aws-sdk/clients/s3';
+import S3 from 'aws-sdk/clients/s3';
 import { extension as extensionMimeType } from 'mime-types';
 
 import { s3PublicDir } from './utils/s3-public-dir';

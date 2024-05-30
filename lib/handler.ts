@@ -17,7 +17,7 @@ import type {
   // itself
   // eslint-disable-next-line import/no-unresolved
 } from 'aws-lambda';
-import * as S3 from 'aws-sdk/clients/s3';
+import S3 from 'aws-sdk/clients/s3';
 
 import { imageOptimizer, S3Config } from './image-optimizer';
 import { normalizeHeaders } from './normalized-headers';
