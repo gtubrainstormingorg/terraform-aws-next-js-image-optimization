@@ -2,10 +2,10 @@ import { fork } from 'child_process';
 import { URLSearchParams } from 'url';
 
 import { Pixel } from '@millihq/pixel-core';
-import getPort from 'get-port';
+import * as getPort from 'get-port';
 import { ImageConfig } from 'next/dist/shared/lib/image-config';
 import fetch from 'node-fetch';
-import S3 from 'aws-sdk/clients/s3';
+import * as S3 from 'aws-sdk/clients/s3';
 
 import { imageOptimizer } from '../../lib/image-optimizer';
 import { createDeferred } from '../../lib/utils';
