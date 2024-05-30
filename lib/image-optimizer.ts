@@ -4,7 +4,7 @@ import { URL, UrlWithParsedQuery } from 'url';
 import { Pixel } from '@millihq/pixel-core';
 import { ImageConfig } from 'next/dist/shared/lib/image-config';
 import nodeFetch from 'node-fetch';
-import S3 from 'aws-sdk/clients/s3';
+import { S3 } from '@aws-sdk/client-s3';
 
 /* -----------------------------------------------------------------------------
  * Types
@@ -60,13 +60,10 @@ async function imageOptimizer(
           ? url.href.substring(1)
           : url.href;
 
-        const object = await s3Config.s3
-          .getObject({
+        const object = await s3Config.s3.getObject({
             Key: trimmedKey,
             Bucket: s3Config.bucket,
-          })
-          .promise();
-
+          });
         if (!object.Body) {
           throw new Error(`Could not fetch image ${trimmedKey} from bucket.`);
         }

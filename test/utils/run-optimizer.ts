@@ -5,7 +5,7 @@ import { Pixel } from '@millihq/pixel-core';
 import getPort from 'get-port';
 import { ImageConfig } from 'next/dist/shared/lib/image-config';
 import fetch from 'node-fetch';
-import S3 from 'aws-sdk/clients/s3';
+import { S3, S3ClientConfig } from '@aws-sdk/client-s3';
 
 import { imageOptimizer } from '../../lib/image-optimizer';
 import { createDeferred } from '../../lib/utils';
@@ -14,7 +14,7 @@ import { GenerateParams } from './generate-params';
 type ImageOptimizerResult = ReturnType<Pixel['imageOptimizer']>;
 
 interface S3Options {
-  options: S3.Types.ClientConfiguration;
+  options: S3ClientConfig;
   bucket: string;
 }
 
