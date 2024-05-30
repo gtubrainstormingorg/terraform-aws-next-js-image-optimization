@@ -1,14 +1,14 @@
 import * as path from 'path';
 import { URLSearchParams } from 'url';
 
-import { generateAPISAM, APISAMGenerator } from '@millihq/sammy';
+import { generateAPISAM, APISAMGenerator } from 'howdygo-sammy';
 import S3 from 'aws-sdk/clients/s3';
 import { extension as extensionMimeType } from 'mime-types';
 
 import { s3PublicDir } from './utils/s3-public-dir';
 import { getLocalIpAddressFromHost } from './utils/host-ip-address';
 
-const NODE_RUNTIME = 'nodejs16.x';
+const NODE_RUNTIME = 'nodejs20.x';
 // Environment variables that should be set in the Lambda environment
 const ENVIRONMENT_VARIABLES = {
   NODE_ENV: 'production',
