@@ -1,7 +1,7 @@
 import { fork } from 'child_process';
 import { URLSearchParams } from 'url';
 
-import { Pixel } from '@millihq/pixel-core';
+import { Pixel } from 'howdygo-pixel-core';
 import getPort from 'get-port';
 import { ImageConfig } from 'next/dist/shared/lib/image-config';
 import fetch from 'node-fetch';
